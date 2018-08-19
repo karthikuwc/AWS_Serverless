@@ -1,1 +1,3 @@
-# AWS_Serverless
+# AWS Serverless
+
+## Setting Up
