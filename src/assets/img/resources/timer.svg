@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 49 (51002) - http://www.bohemiancoding.com/sketch -->
+    <title>DDFFD9A5-D497-4CA2-A990-B6DBA2F2F0DA</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <polygon id="path-1" points="0 0.1019375 19.8975 0.1019375 19.8975 20 0 20"></polygon>
+    </defs>
+    <g id="HOMEPAGE" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home-Page---1.0" transform="translate(-35.000000, -1212.000000)">
+            <g id="Group-17" transform="translate(0.000000, 1024.000000)">
+                <g id="Page-1" transform="translate(35.000000, 188.000000)">
+                    <g id="Group-3">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Clip-2"></g>
+                        <path d="M9.94875,0.1019375 C4.45375,0.1019375 0,4.5563125 0,10.0506875 C0,15.5450625 4.45375,20.0000625 9.94875,20.0000625 C15.443125,20.0000625 19.8975,15.5450625 19.8975,10.0506875 C19.8975,4.5563125 15.443125,0.1019375 9.94875,0.1019375 M18.4797042,10.0507042 C18.4797042,14.7552136 14.6526677,18.58225 9.94875,18.58225 C5.24483229,18.58225 1.41779584,14.7552136 1.41779584,10.0507042 C1.41779584,5.34678645 5.24483229,1.51975 9.94875,1.51975 C14.6526677,1.51975 18.4797042,5.34678645 18.4797042,10.0507042 Z" id="Fill-1" fill="#FF836F" mask="url(#mask-2)"></path>
+                    </g>
+                    <polyline id="Stroke-4" stroke="#FF836F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="10 3.125 10 10.2489363 14.375 14.375"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
