@@ -61,6 +61,82 @@ npm install
 
 ### Integrating AWS Cognito
 
-We use AWS Cognito to manage users in our project. After creating a user pool and and attached client app in the AWS Cognito console, we use the AWS Cognito SDK (
+We use AWS Cognito to manage users in our project. After creating a user pool and and attached client app in the AWS Cognito console, we use the Amazon Cognito Identity SDK (https://github.com/aws-amplify/amplify-js/tree/master/packages/amazon-cognito-identity-js) to create custom user action functions within our project (src/signupcommon/entry.js). These functions take user attributes, a user pool ID and a app client ID as arguments. They are asynchronous functions so callback functions need to be used to ensure pages execute correctly. An example of the sign-in functions implementation is shown below (src/signuppages/signIn.js)
+```
+import {signIn} from 'signupcommon/entry';
+
+handleSubmit(event) {
+      event.preventDefault();
+      const re = errors.regex.email;
+      
+      if(!re.test(this.state.emailAddress)) {
+        this.setState({
+          err: {
+            mes: errors.validation.username,
+            email: true,
+            password:false
+          }
+        });
+        console.log(this.state.err.mes);
+      }
+      else {
+        this.setState({err: {email: false, password: false, mes:this.state.err.mes}}, () => {
+          
+          var obj = {
+            UserPoolId: "ap-southeast-1_TB9GVW9nj",
+            ClientId: "2a57aiojrldeloo774oritg30i",
+            Email: this.state.emailAddress,
+            PhoneNumber: this.state.mobileNumber,
+            password: this.state.password
+          }
+          
+          signIn(obj, this.signInCallback, this);
+          console.log(JSON.stringify(obj));
+          event.preventDefault();
+        });  
+      }
+    }
+    
+    signInCallback(obj, err) {
+      var message ="";
+      
+      if (obj == undefined) {
+        message = err;
+        
+        for (var word in errors) {
+          if (err.includes(word)) {
+            for (var subword in errors[word]) {
+              if(err.includes(subword)) {
+                message = errors[word][subword]; 
+                break;
+              }
+            }
+          }
+        }
+        
+        this.setState({
+          err: {
+            mes: message,
+            email: false,
+            password: false
+          },
+          vis:"visible"
+        });
+      }
+      else {
+        console.log('signing in ' +obj.Name);
+        // this.props.pass.setEmail(this.state.emailAddress);
+      
+        this.setState({name: obj.Name}, ()=>{ this.setState({redirect: true})});
+      }
+    }
+    
+    hide () {this.setState({err: {email: false, password: false, mes:this.state.err.mes}});}
+    
+    getTarget() {
+      if (this.state.err.email) {return ReactDOM.findDOMNode(this.emtarget);}
+      if(this.state.err.password) {return ReactDOM.findDOMNode(this.patarget);}
+    }
+```
 
 
