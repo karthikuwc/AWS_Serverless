@@ -48,3 +48,7 @@ In this project styles are added to components with both css and jsx. To create 
 npm install -g less
 ```
 
+To compile a file from less to css run the following command.
+```
+lessc [styles].less [styles].css 
+```
