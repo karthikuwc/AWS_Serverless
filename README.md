@@ -3,7 +3,7 @@
 
 ### Setting Up AWS Cloud9
 We used the AWS Cloud9 IDE to set up an environment to create a serverless react web app. After provisioning a specific development environment, run the following commands to install environment updates required for compilation & testing.
-```javascript
+```shell
 //Install the latest version of node packet manager
 npm install npm@latest -g
 
