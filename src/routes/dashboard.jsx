@@ -19,8 +19,9 @@ import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.jsx";
 
-const nothing = (<div>Hi</div>);
 
+
+/*Routes for all parent buttons within dashboard, which specify component that should be loaded in main dashboard area for each button*/
 const dashboardRoutes = [
   // {
   //   path: "/d/:userid/dashboard",
@@ -34,7 +35,7 @@ const dashboardRoutes = [
     sidebarName: "L-Router1",
     navbarName: "Profile",
     icon: Person,
-    component: DashboardPage
+    component: DashboardPage 
   },
   {
     path: "/d/router2",

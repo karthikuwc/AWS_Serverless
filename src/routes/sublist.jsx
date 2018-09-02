@@ -10,8 +10,7 @@ import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import DashboardLayout from "views/Dashboard2/Dashboard.jsx";
 
 
-const nothing = (<div></div>);
-
+/*Routes for all child buttons within dashboard, which specify component that should be loaded in main dashboard area for each button*/
 const sublistRoutes = [
   // {
   //   path: "/d/:userid/dashboard",

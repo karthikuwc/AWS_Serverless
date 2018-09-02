@@ -232,6 +232,7 @@ function checkValid(obj) {
     var valid;
 
     if (cognitoUser != null) {
+        //This function does not seem to be asynchronous
         cognitoUser.getSession(function(err, session) {
             if (err) {
                 alert(err.message || JSON.stringify(err));
@@ -242,12 +243,48 @@ function checkValid(obj) {
                 valid = session.isValid();
             }
         });
-    } else {
+    } 
+    else {
         valid = false;
     }
     
     return valid;
 }
 
-export {signIn, signOut, signUp, update, checkValid};
+function getAttribute(obj, callback, modalClass){
+    
+    var poolData = {
+        UserPoolId : obj.UserPoolId, // Your user pool id here
+        ClientId : obj.ClientId // Your client id here
+    };
+    var userPool = new CognitoUserPool(poolData);
+    var cognitoUser = userPool.getCurrentUser();
+    
+    
+    if(cognitoUser != null) {
+        cognitoUser.getSession(function(err, session) {
+            if(err){
+                alert(err.message || JSON.stringify(err));
+            }
+            else {
+                cognitoUser.getUserAttributes(function(err, result) {
+                            if (err) {
+                                alert(err.message || JSON.stringify(err));
+                                return;
+                            }
+                            for (var i = 0; i < result.length; i++) {
+                                console.log('attribute ' + result[i].getName() + ' has value ' + result[i].getValue());
+                                if (result[i].getName() == 'name') var name = result[i].getValue();
+                                if (result[i].getName() == 'email') var email = result[i].getValue();
+                            }
+                            if(typeof(callback) == "function") callback.call(modalClass, {Name:name, Email:email});
+                        });
+            }
+        });
+    }        
+    
+    
+}
+
+export {signIn, signOut, signUp, update, checkValid, getAttribute};
 

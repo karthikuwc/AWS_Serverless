@@ -65,12 +65,18 @@ class SignIn extends React.Component {
         this.setState({password: event.target.value});
     }
     
-    handleSubmit(event) {
+handleSubmit(event) {
+      //Preventing browser from performing default action for button click
       event.preventDefault();
-      const re = errors.regex.email;
       
-      if(!re.test(this.state.emailAddress)) {
-        this.setState({
+      //Importing the regular expression from external file to test inputs.
+      const re = errors.regex.email; 
+      
+      //Validating user input locally
+      if(!re.test(this.state.emailAddress)) { 
+      
+        //Changing state of component to display err msg
+        this.setState({ 
           err: {
             mes: errors.validation.username,
             email: true,
@@ -80,8 +86,10 @@ class SignIn extends React.Component {
         console.log(this.state.err.mes);
       }
       else {
+        //this.setState can take a callback function as its second argument, whcih is called only after state is set.
         this.setState({err: {email: false, password: false, mes:this.state.err.mes}}, () => {
           
+          //Get these details from cognito console.
           var obj = {
             UserPoolId: "ap-southeast-1_TB9GVW9nj",
             ClientId: "2a57aiojrldeloo774oritg30i",
@@ -90,19 +98,24 @@ class SignIn extends React.Component {
             password: this.state.password
           }
           
-          signIn(obj, this.signInCallback, this);
+          //signIn function is imported and takes an obj, a callback function and the current component as its arguments.
+          //It is necessary to pass the current function so that this.setState can be called in the callback function.
+          signIn(obj, this.signInCallback, this); //In signin callback 
           console.log(JSON.stringify(obj));
           event.preventDefault();
         });  
       }
     }
     
+    //Callback function for signin. Meant to return an object with user attributes if sign-in successful.
     signInCallback(obj, err) {
       var message ="";
       
+      //If sign-in unsuccessful error will be returned.
       if (obj == undefined) {
         message = err;
         
+        //Identify error and return user friendly statement
         for (var word in errors) {
           if (err.includes(word)) {
             for (var subword in errors[word]) {
@@ -123,10 +136,10 @@ class SignIn extends React.Component {
           vis:"visible"
         });
       }
+      //If sign-in is succsessful a user attribute object will be returned.
+      //However session validity is set by cognito function independently in browser cache.
       else {
         console.log('signing in ' +obj.Name);
-        // this.props.pass.setEmail(this.state.emailAddress);
-      
         this.setState({name: obj.Name}, ()=>{ this.setState({redirect: true})});
       }
     }

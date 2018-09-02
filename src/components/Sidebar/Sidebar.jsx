@@ -18,7 +18,7 @@ import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebar
 
 import Right from "assets/img/glidespot/right.svg";
 import Down from "assets/img/glidespot/down.svg";
-import Router from "assets/img/glidespot/router.svg"
+import Router from "assets/img/glidespot/router.svg";
 
 import Computer from "assets/img/glidespot/computer.svg";
 import Head from "assets/img/glidespot/head-icon.svg";
@@ -27,16 +27,18 @@ import Wifi from "assets/img/glidespot/wifi.svg";
 
 
 const Sidebar = ({ ...props }) => {
-  // verifies if routeName is the one active (in browser input)
+  //Verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
-  const { classes, color, logo, image, logoText, routes, userid, subroutes, state } = props;
-  console.log("hiiiii "+userid);
+  
+  //Loading all props as constants
+  const { classes, color, logo, image, logoText, routes, subroutes, state } = props;
+
   var links = (
     <List className={classes.list}>
-      {routes.map((prop, key) => {
-        // var pathbits = prop.path.split("/");
+      { //Create sidebar buttons for all routes passed as props
+        routes.map((prop, key) => {
         var path = prop.path;
         if (prop.redirect) return null;
         var activePro = " ";
@@ -47,6 +49,7 @@ const Sidebar = ({ ...props }) => {
             [" " + classes[color]]: true
           });
         } else {
+          //Make active button green
           listItemClasses = classNames({
             [" " + classes[color]]: activeRoute(path)
           });
@@ -56,12 +59,15 @@ const Sidebar = ({ ...props }) => {
         });
         console.log("path "+path);
         return (
+          /*NavLink makes button a Link*/
           <NavLink
+            /*Passing object to prop 'to' allows a state to be passed during link*/
             to={{pathname: path, state: state}}
             className={activePro + classes.item}
             activeClassName="active"
             key={key}
-          >
+          > 
+            
             <ListItem button className={classes.itemLink + listItemClasses}>
               <ListItemIcon className={classes.itemIcon + whiteFontClasses}>
                 <img src={Router} className={classes.imgdown}/>
@@ -75,9 +81,11 @@ const Sidebar = ({ ...props }) => {
                 {activeRoute(path) ? (<img src={Down} className={classes.imgdown}/>):(<img src={Right} className={classes.imgright}/>)}
               </ListItemIcon>
             </ListItem>
-            {activeRoute(path) ? (
+            {/*If active route show dropdown menu from active button*/
+             activeRoute(path) ? (
             <div>
-              {subroutes.map((prop, key) => {
+              {/*Dropdown menu includes button for all items in subroutes*/
+               subroutes.map((prop, key) => {
                 var subpath = path + prop.path;
                 console.log("subpath "+subpath);
                 var sublistItemClasses;
@@ -125,6 +133,7 @@ const Sidebar = ({ ...props }) => {
     </List>
   );
   var brand = (
+    /*Header for sidebar*/
     <div className={classes.logo}>
       <a className={classes.logoLink}>
         <Link to={{pathname:"/f/signindone", state:state}} >
@@ -136,6 +145,8 @@ const Sidebar = ({ ...props }) => {
       </a>
     </div>
   );
+  
+  /*Main return function in sidebar*/
   return (
     <div>
       <Hidden mdUp implementation="css">
