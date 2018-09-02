@@ -58,6 +58,39 @@ Lastly, run the following to install all of the node modules for this project.
 npm install
 ```
 
+### Programmatic Flow
+
+```javascript
+/* -> indicates all project relevant file locations accessed by parent path */
+
+src/index.js /*Script entry point upon loading root URL*/ {
+      
+      -> src/routes/index.jsx /*Main routes*/ {
+            
+            ->src/signuppages/signIn.js
+            ->src/signuppages/signInDone.js
+            ->src/signuppages/signUp.js
+            ->src/signuppages/signUpDOne.js
+            ->src/layout/Dashboard.jsx {
+            
+                  ->src/components/Sidebar.jsx
+                  ->src/routes/dashboard.jsx {
+                  
+                        ->src/views/Dashboard/Dashboard.jsx
+                        ->src/views/Dashboard2/Dashboard.jsx
+                  }
+                  ->src/routes/sublist.jsx {
+                        
+                        ->src/views/Dashboard/Dashboard.jsx
+                        ->src/views/Dashboard2/Dashboard.jsx
+                  }
+            }
+      }
+}
+
+/*Similar paths in src/assets/jss/material-dashboard-react correspond to styles of components in src/components, src/views and src/layout*/
+      
+```
 
 ### Integrating AWS Cognito
 
