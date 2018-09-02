@@ -25,11 +25,6 @@ docker build -t aws/codebuild/nodejs:8.11.0 .
 docker pull amazon/aws-codebuild-local:latest --disable-content-trust=false
 ```
 
-To run a loacal build with the same AWS permissions as granted to Cloud9 run the following script, ammending the artifacts and source paths accordingly. This command should be run in the root folder where "codebuild_build.sh" exists. A buildspec.yml file should exist in the source's root folder.
-```javascript
-./codebuild_build.sh -i aws/codebuild/nodejs:8.11.0 -a /home/ec2-user/environment/artifacts -s /home/ec2-user/environment/signUpInt -c
-```
-
 Next run the following commands to initialize a react app with default settings.
 ```
 npx create-react-app my-app
@@ -180,4 +175,36 @@ handleSubmit(event) {
     }
 ```
 
+### Deploying project to S3 Bucket
 
+Using the AWS console create an S3 bucket with the following policy...
+```javascript
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::glidespot/*"
+        },
+        {
+            "Sid": "2",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E126T29NFER3GR"
+            },
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::glidespot/*"
+        }
+    ]
+}
+```
+
+Congifure the S3 bucket for static web hosting and make the index page and the error page 'index.html'.
+
+To run a local build with the same AWS permissions as granted to Cloud9 run the following script, ammending the artifacts and source paths accordingly. This command should be run in the root folder where "codebuild_build.sh" exists. A buildspec.yml file should exist in the source's root folder. For this command to work in the buildspec.yml file the exact bucket name must be specified. Ensure the Cloud9 environment has the sufficient permission to write to S3 buckets.
+```javascript
+./codebuild_build.sh -i aws/codebuild/nodejs:8.11.0 -a /home/ec2-user/environment/artifacts -s /home/ec2-user/environment/signUpInt -c
+```
