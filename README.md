@@ -2,7 +2,7 @@
 
 
 ### Setting Up AWS Cloud9
-We used the AWS Cloud9 IDE to set up an environment to create a serverless react web app. After provisioning a specific development environment, run the following commands to install environment updates required for compilation & testing.
+We used the AWS Cloud9 IDE to set up an environment to create a serverless react web app. After provisioning a development environment, run the following commands to install important packages.
 ```
 //Install the latest version of node packet manager
 npm install npm@latest -g
@@ -41,11 +41,6 @@ sudo du -x -h / | sort -h | tail -40
 In this project styles are added to components with both css and jsx. To create deconflictling css files we can use less. Run the following command to install the less to css compiler.
 ```
 npm install -g less
-```
-
-To compile a file from less to css run the following command.
-```
-lessc [styles].less [styles].css 
 ```
 
 Lastly, run the following to install all of the node modules for this project.
@@ -89,7 +84,9 @@ src/index.js /*Script entry point upon loading root URL*/ {
 
 ### Integrating AWS Cognito
 
-We use AWS Cognito to manage users in our project. After creating a user pool and and attached client app in the AWS Cognito console, we use the Amazon Cognito Identity SDK (https://github.com/aws-amplify/amplify-js/tree/master/packages/amazon-cognito-identity-js) to create custom user action functions within our project (src/signupcommon/entry.js). These functions take user attributes, a user pool ID and a app client ID as arguments. They are asynchronous functions so callback functions need to be used to ensure pages execute correctly. An example of the sign-in functions implementation is shown below (src/signuppages/signIn.js)
+We use AWS Cognito to manage users in our project. After creating a user pool and an attached client app in the AWS Cognito console, we use the Amazon Cognito Identity SDK (https://github.com/aws-amplify/amplify-js/tree/master/packages/amazon-cognito-identity-js) to create custom user action functions within our project (src/signupcommon/entry.js). 
+
+These functions take user attributes, a user pool ID and an app client ID as arguments. They are asynchronous functions so callback functions need to be used to ensure pages execute correctly. An example of the sign-in functions implementation is shown below (src/signuppages/signIn.js)
 ```javascript
 import {signIn} from 'signupcommon/entry';
 
@@ -204,7 +201,16 @@ Using the AWS console create an S3 bucket with the following policy...
 
 Congifure the S3 bucket for static web hosting and make the index page and the error page 'index.html'.
 
-To run a local build with the same AWS permissions as granted to Cloud9 run the following script, ammending the artifacts and source paths accordingly. This command should be run in the root folder where "codebuild_build.sh" exists. A buildspec.yml file should exist in the source's root folder. For this command to work in the buildspec.yml file the exact bucket name must be specified. Ensure the Cloud9 environment has the sufficient permission to write to S3 buckets.
+To run a local build with the same AWS permissions as granted to Cloud9 run the following script, ammending the artifacts and source paths accordingly.
 ```javascript
 ./codebuild_build.sh -i aws/codebuild/nodejs:8.11.0 -a /home/ec2-user/environment/artifacts -s /home/ec2-user/environment/signUpInt -c
+```
+
+This command should be run in the root folder where "codebuild_build.sh" exists. A buildspec.yml file should exist in the source's root folder. For this command to work, the correct bucket name must be specified in the buildspec.yml file. Ensure the Cloud9 environment has the sufficient permission to write to S3 buckets.
+
+### Miscellaneous Commands
+
+To compile a file from less to css run the following command.
+```
+lessc [styles].less [styles].css 
 ```
